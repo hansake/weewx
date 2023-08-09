@@ -3205,6 +3205,33 @@ class PacketFactory(object):
             logerr("parse timestamp failed for '%s': %s" % (line, e))
         return ts, payload
 
+class Cotech367959Packet(Packet):
+    # Cotech Weather Station, 36-7959 from Clas Ohlson. Created 2022-10-23
+    # {"time" : "2022-10-23 13:44:53", "model" : "Cotech-367959", "id" : 31, "battery_ok" : 1, "temperature_C" : 11.500,"humidity": 99, "rain_mm" : 12.500, "wind_dir_deg" : 221, "wind_avg_m_s" : 1.300, "wind_max_m_s" : 1.700, "light_lux" : 69627, "uv" : 251, "mic" : "CRC"}
+
+    IDENTIFIER = "Cotech-367959"
+
+    @staticmethod
+    def parse_json(obj):
+        pkt = dict()
+        pkt['dateTime'] = Packet.parse_time(obj.get('time'))
+        pkt['usUnits'] = weewx.METRICWX
+        pkt['station_id'] = obj.get('id')
+        pkt['temperature'] = Packet.get_float(obj, 'temperature_C')
+        pkt['humidity'] = Packet.get_float(obj, 'humidity')
+        pkt['wind_dir'] = Packet.get_float(obj, 'wind_dir_deg')
+        pkt['wind_speed'] = Packet.get_float(obj, 'wind_avg_m_s')
+        pkt['wind_gust'] = Packet.get_float(obj, 'wind_max_m_s')
+        pkt['rain_total'] = Packet.get_float(obj, 'rain_mm')
+        pkt['uv_index'] = Packet.get_float(obj, 'uv')
+        pkt['light'] = Packet.get_float(obj, 'light_lux')
+        pkt['battery'] = 0 if Packet.get_float(obj, 'battery_ok') == 1 else 1
+        return Cotech367959Packet.insert_ids(pkt)
+
+    @staticmethod
+    def insert_ids(pkt):
+        station_id = pkt.pop('station_id', '0000')
+        return Packet.add_identifiers(pkt, station_id, Cotech367959Packet.__name__)
 
 class SDRConfigurationEditor(weewx.drivers.AbstractConfEditor):
     @property
