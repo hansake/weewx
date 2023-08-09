@@ -110,7 +110,7 @@ Add to configuration.yaml
 ```
 # JSON data from WeeWx Weather Station
 rest:
-  - resource: http://192.168.42.54/weewx/current.json
+  - resource: http://<weewx IP address>/weewx/current.json
     scan_interval: 60
     headers:
       User-Agent: WeeWx
