@@ -7,7 +7,7 @@
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
 [Köp RTL-SDR receiver dongle (v3) till rätt pris @ Electrokit](https://www.electrokit.com/produkt/rtl-sdr-receiver-dongle-v3/)
 
-Install RTL_433 from [merbanan/rtl_433: Program to decode radio transmissions from devices on the ISM bands (and other frequencies)](https://github.com/merbanan/rtl_433)
+The driver for the  RTL-SDR receiver dongle is RTL_433 from [merbanan/rtl_433: Program to decode radio transmissions from devices on the ISM bands (and other frequencies)](https://github.com/merbanan/rtl_433)
 
 May be installed with: sudo apt install rtl-433.
 
