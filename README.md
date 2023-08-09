@@ -7,8 +7,6 @@
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
 [Köp RTL-SDR receiver dongle (v3) till rätt pris @ Electrokit](https://www.electrokit.com/produkt/rtl-sdr-receiver-dongle-v3/)
 
-
-
 ## Description
 
 The WeeWX weather system is written in Python and runs on Linux, MacOSX,
