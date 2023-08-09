@@ -1,6 +1,14 @@
 # [WeeWX](http://www.weewx.com)
 *Open source software for your weather station*
 
+## Modifications for Cotech weather station
+[Trådlös väderstation med USB Cotech | Clas Ohlson](https://www.clasohlson.com/se/Tr%C3%A5dl%C3%B6s-v%C3%A4derstation-med-USB-Cotech/p/36-7959)
+
+Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
+[Köp RTL-SDR receiver dongle (v3) till rätt pris @ Electrokit](https://www.electrokit.com/produkt/rtl-sdr-receiver-dongle-v3/)
+
+
+
 ## Description
 
 The WeeWX weather system is written in Python and runs on Linux, MacOSX,
