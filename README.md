@@ -1,7 +1,7 @@
 # [WeeWX](http://www.weewx.com)
 *Open source software for your weather station*
 
-## Modifications for Cotech weather station
+## Description of modifications for Cotech weather station
 [Trådlös väderstation med USB Cotech | Clas Ohlson](https://www.clasohlson.com/se/Tr%C3%A5dl%C3%B6s-v%C3%A4derstation-med-USB-Cotech/p/36-7959)
 
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
@@ -14,7 +14,34 @@ May be installed with: sudo apt install rtl-433.
 The SDR integration is from: [matthewwall/weewx-sdr: weewx driver for software-defined radio](https://github.com/matthewwall/weewx-sdr/) and modified for the Cotech weather station.
 
 Install WeeWx as described in [http://weewx.com/docs.html/latest/setup.htm WeeWX&#58; Installation using setup.py]
-download of the tar.gz file is not needed if this repository is cloned.https://github.com/matthewwall/weewx-sdr/
+download of the tar.gz file is not needed if this repository is cloned.
+
+The configuration should be edited to include the values from the driver.
+Note that the value .31. seems to change each time the battery is replaced in
+the weather station.
+
+```
+$ sudo nano weewx.conf
+...
+##############################################################################
+
+[SDR]
+    # This section is for the software-defined radio driver.
+
+    # The driver to use
+    driver = weewx.drivers.sdr
+    cmd = rtl_433 -R 153 -C si -M utc -F json
+    [[sensor_map]]
+        rain_total = rain_total.31.Cotech367959Packet
+        windGust = wind_gust.31.Cotech367959Packet
+        windSpeed = wind_speed.31.Cotech367959Packet
+        windDir = wind_dir.31.Cotech367959Packet
+        outHumidity = humidity.31.Cotech367959Packet
+        outTemp = temperature.31.Cotech367959Packet
+        outBatteryStatus = battery.31.Cotech367959Packet
+
+##############################################################################
+```
 
 ## Description
 
