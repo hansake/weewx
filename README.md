@@ -7,6 +7,13 @@
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
 [Köp RTL-SDR receiver dongle (v3) till rätt pris @ Electrokit](https://www.electrokit.com/produkt/rtl-sdr-receiver-dongle-v3/)
 
+Install RTL_433 from [merbanan/rtl_433: Program to decode radio transmissions from devices on the ISM bands (and other frequencies)](https://github.com/merbanan/rtl_433)
+
+May be installed with: sudo apt install rtl-433
+
+Install WeeWx as described in [http://weewx.com/docs.html/latest/setup.htm WeeWX&#58; Installation using setup.py]
+download is not needed if this repository is cloned.
+
 ## Description
 
 The WeeWX weather system is written in Python and runs on Linux, MacOSX,
