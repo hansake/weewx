@@ -1,7 +1,9 @@
 # [WeeWX](http://www.weewx.com)
 *Open source software for your weather station*
 
-## Description of modifications for Cotech weather station
+## My modifications to WeeWx
+
+### Modifications for Cotech weather station
 [Trådlös väderstation med USB Cotech | Clas Ohlson](https://www.clasohlson.com/se/Tr%C3%A5dl%C3%B6s-v%C3%A4derstation-med-USB-Cotech/p/36-7959)
 
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
@@ -45,6 +47,129 @@ $ sudo nano weewx.conf
 To find out the value corresponding to .31. this command may be given:
 ```
 $ sudo PYTHONPATH=bin python3 bin/weewx/drivers/sdr.py --cmd="rtl_433 -R 153 -C si -M utc -F json"
+```
+### Export weather data from WeeWx to Home Assistant
+
+Enable the Seasons skin is in weewx.conf:
+```
+$ cat /home/weewx/weewx.conf
+...
+    [[SeasonsReport]]
+        # The SeasonsReport uses the 'Seasons' skin, which contains the
+        # images, templates and plots for the report.
+        skin = Seasons
+        enable = true
+...
+```
+Create new template for JSON report: 
+```
+$ sudo nano /home/weewx/skins/Seasons/current.json.tmpl
+...
+#encoding UTF-8
+{
+  "time":"$current.dateTime",
+  "stats": {
+    "current": {
+      "outTemp":"$current.outTemp.format(add_label=False)",
+      "windchill":"$current.windchill.format(add_label=False)",
+      "heatIndex":"$current.heatindex.format(add_label=False)",
+      "dewpoint":"$current.dewpoint.format(add_label=False)",
+      "humidity":"$current.outHumidity.format(add_label=False)",
+      "windSpeed":"$current.windSpeed.format(add_label=False)",
+      "windDir":"$current.windDir.format(add_label=False)",
+      "windDirText":"$current.windDir.ordinal_compass",
+      "windGust":"$current.windGust.format(add_label=False)",
+      "windGustDir":"$current.windGustDir.format(add_label=False)",
+      "rainRate":"$current.rainRate.format(add_label=False)"
+    },
+    "sinceMidnight": {
+      "rainSum":"$day.rain.sum.format(add_label=False)"
+    }
+  }
+}
+```
+
+Include the JSON template in "skin.conf" after the RSS template: 
+```
+$ sudo nano /home/weewx/skins/Seasons/skin.conf
+...
+        [[[RSS]]]
+            template = rss.xml.tmpl
+
+        [[[json]]]
+            template = current.json.tmpl
+...
+```
+Restart WeeWx.
+
+### Import weather data from WeeWx to Home Assistant
+
+
+Add to configuration.yaml
+
+```
+# JSON data from WeeWx Weather Station
+rest:
+  - resource: http://192.168.42.54/weewx/current.json
+    scan_interval: 60
+    headers:
+      User-Agent: WeeWx
+      Content-Type: application/json
+    sensor:
+    - name: WeeWx outTemp
+      unique_id: weewx_outtemp
+      value_template: "{{ value_json.stats.current.outTemp }}"
+      device_class: temperature
+      unit_of_measurement: "°C"
+    - name: WeeWx windchill
+      unique_id: weewx_windchill
+      value_template: "{{ value_json.stats.current.windchill }}"
+      device_class: temperature
+      unit_of_measurement: "°C"
+    - name: WeeWx heatIndex
+      unique_id: weewx_heatindex
+      value_template: "{{ value_json.stats.current.heatIndex }}"
+      device_class: temperature
+      unit_of_measurement: "°C"
+    - name: WeeWx dewpoint
+      unique_id: weewx_dewpoint
+      value_template: "{{ value_json.stats.current.dewpoint }}"
+      device_class: temperature
+      unit_of_measurement: "°C"
+    - name: WeeWx humidity
+      unique_id: weewx_humidity
+      value_template: "{{ value_json.stats.current.humidity }}"
+      device_class: humidity
+      unit_of_measurement: "%"
+    - name: WeeWx windSpeed
+      unique_id: weewx_windspeed
+      value_template: "{{ value_json.stats.current.windSpeed }}"
+      device_class: wind_speedImport weather data from WeeWx to Home Assistant
+      unit_of_measurement: "m/s"
+    - name: WeeWx windDir
+      unique_id: weewx_winddir
+      value_template: "{{ value_json.stats.current.windDir }}"
+      unit_of_measurement: "°"
+    - name: WeeWx windDirText
+      unique_id: weewx_winddirtext
+      value_template: "{{ value_json.stats.current.windDirText }}"
+    - name: WeeWx windGust
+      unique_id: weewx_windgust
+      value_template: "{{ value_json.stats.current.windGust }}"
+      device_class: wind_speed
+      unit_of_measurement: "m/s"
+    - name: WeeWx windGustDir
+      unique_id: weewx_windgustdir
+      value_template: "{{ value_json.stats.current.windGustDir }}"
+      unit_of_measurement: "°"
+    - name: WeeWx rainRate
+      unique_id: weewx_rainrate
+      value_template: "{{ value_json.stats.current.rainRate }}"
+      unit_of_measurement: "mm/h"
+    - name: WeeWx rainSum
+      unique_id: weewx_rainSum
+      value_template: "{{ value_json.stats.sinceMidnight.rainSum }}"
+      unit_of_measurement: "mm"
 ```
 
 ## Description
