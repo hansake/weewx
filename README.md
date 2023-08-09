@@ -13,7 +13,7 @@ May be installed with: sudo apt install rtl-433.
 
 The SDR integration is from: [matthewwall/weewx-sdr: weewx driver for software-defined radio](https://github.com/matthewwall/weewx-sdr/) and modified for the Cotech weather station.
 
-Install WeeWx as described in [http://weewx.com/docs.html/latest/setup.htm WeeWX&#58; Installation using setup.py]
+Install WeeWx as described in [WeeWX: Installation using setup.py](http://weewx.com/docs.html/latest/setup.htm)
 download of the tar.gz file is not needed if this repository is cloned.
 
 The configuration should be edited to include the values from the driver.
