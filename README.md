@@ -9,10 +9,12 @@ Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect th
 
 Install RTL_433 from [merbanan/rtl_433: Program to decode radio transmissions from devices on the ISM bands (and other frequencies)](https://github.com/merbanan/rtl_433)
 
-May be installed with: sudo apt install rtl-433
+May be installed with: sudo apt install rtl-433.
+
+The SDR integration is from: [matthewwall/weewx-sdr: weewx driver for software-defined radio](https://github.com/matthewwall/weewx-sdr/) and modified for the Cotech weather station.
 
 Install WeeWx as described in [http://weewx.com/docs.html/latest/setup.htm WeeWX&#58; Installation using setup.py]
-download is not needed if this repository is cloned.
+download of the tar.gz file is not needed if this repository is cloned.https://github.com/matthewwall/weewx-sdr/
 
 ## Description
 
