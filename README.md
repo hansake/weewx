@@ -42,6 +42,10 @@ $ sudo nano weewx.conf
 
 ##############################################################################
 ```
+To find out the value corresponding to .31. this command may be given:
+```
+$ sudo PYTHONPATH=bin python3 bin/weewx/drivers/sdr.py --cmd="rtl_433 -R 153 -C si -M utc -F json"
+```
 
 ## Description
 
