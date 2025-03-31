@@ -29,18 +29,18 @@ $ sudo nano weewx.conf
 
 [SDR]
     # This section is for the software-defined radio driver.
-
+    
     # The driver to use
     driver = weewx.drivers.sdr
     cmd = rtl_433 -R 153 -C si -M utc -F json
     [[sensor_map]]
-        rain_total = rain_total.31.Cotech367959Packet
-        windGust = wind_gust.31.Cotech367959Packet
-        windSpeed = wind_speed.31.Cotech367959Packet
-        windDir = wind_dir.31.Cotech367959Packet
-        outHumidity = humidity.31.Cotech367959Packet
-        outTemp = temperature.31.Cotech367959Packet
-        outBatteryStatus = battery.31.Cotech367959Packet
+        rain_total = rain_total.*.Cotech367959Packet
+        windGust = wind_gust.*.Cotech367959Packet
+        windSpeed = wind_speed.*.Cotech367959Packet
+        windDir = wind_dir.*.Cotech367959Packet
+        outHumidity = humidity.*.Cotech367959Packet
+        outTemp = temperature.*.Cotech367959Packet
+        outBatteryStatus = battery.*.Cotech367959Packet
 
 ##############################################################################
 ```
