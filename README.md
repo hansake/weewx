@@ -3,8 +3,11 @@
 
 ## My modifications to WeeWx
 
-### Modifications for Cotech weather station
+### Modifications for Cotech weather station 36-7959 from Clas Ohlson
 [Trådlös väderstation med USB Cotech | Clas Ohlson](https://www.clasohlson.com/se/Tr%C3%A5dl%C3%B6s-v%C3%A4derstation-med-USB-Cotech/p/36-7959)
+
+These modifications works also with Luxorparts weather station 49300 from Kjell & Company
+[Luxorparts Trådlös Väderstation - Väderstationer med vindmätare | Kjell &amp; Company](https://www.kjell.com/se/produkter/hem-fritid/vaderstationer/vaderstationer-med-vindmatare/luxorparts-tradlos-vaderstation-p49300)
 
 Using the WeeWx SDR integration and a RTL-SDR receiver dongle (v3) to connect the weather station to WeeWx.
 [Köp RTL-SDR receiver dongle (v3) till rätt pris @ Electrokit](https://www.electrokit.com/produkt/rtl-sdr-receiver-dongle-v3/)
@@ -80,7 +83,8 @@ $ sudo nano /home/weewx/skins/Seasons/current.json.tmpl
       "windDirText":"$current.windDir.ordinal_compass",
       "windGust":"$current.windGust.format(add_label=False)",
       "windGustDir":"$current.windGustDir.format(add_label=False)",
-      "rainRate":"$current.rainRate.format(add_label=False)"
+      "rainRate":"$current.rainRate.format(add_label=False)",
+      "outBatteryStatus":"$current.outBatteryStatus.format(format_string="%u", add_label=False)"
     },
     "sinceMidnight": {
       "rainSum":"$day.rain.sum.format(add_label=False)"
@@ -170,6 +174,11 @@ rest:
       unique_id: weewx_rainSum
       value_template: "{{ value_json.stats.sinceMidnight.rainSum }}"
       unit_of_measurement: "mm"
+    binary_sensor:
+    - name: WeeWx outBattery
+      unique_id: weewx_outtemp
+      value_template: "{{ value_json.stats.current.outBatteryStatus }}"
+      device_class: battery
 ```
 
 ## Description
