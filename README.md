@@ -176,7 +176,7 @@ rest:
       unit_of_measurement: "mm"
     binary_sensor:
     - name: WeeWx outBattery
-      unique_id: weewx_outtemp
+      unique_id: weewx_outbattery
       value_template: "{{ value_json.stats.current.outBatteryStatus }}"
       device_class: battery
 ```
